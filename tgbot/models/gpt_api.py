@@ -17,8 +17,12 @@ class GPT:
             messages=self.__message
         )
         self.__message.append(
-            {'role': 'bot', 'content': answer.choices[0].message.content})
+            {'role': 'assistant', 'content': answer.choices[0].message.content})
         return answer.choices[0].message.content
+    
+    def clear(self):
+        self.__message = []
+
 
 
 if __name__ == '__main__':

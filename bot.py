@@ -12,8 +12,6 @@ from tgbot.services import broadcaster
 
 logger = logging.getLogger(__name__)
 
-# user_router.next() для к следующему хендлеру в роутере
-
 
 async def on_startup(bot: Bot, admin_ids: list[int]):
     await broadcaster.broadcast(bot, admin_ids, "openai приготовился к работе")
@@ -52,4 +50,4 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.error("Бот був вимкнений!")
+        logger.error("Бот выключен!")

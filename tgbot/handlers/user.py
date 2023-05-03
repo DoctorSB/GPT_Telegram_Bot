@@ -14,10 +14,10 @@ async def start(message: Message):
 
 @user_router.message()
 async def request(message: Message):
+    await message.answer('Подождите, идет обработка запроса...')
     try:
         await message.answer(gpt.request(message.text))
     except Exception as e:
         await message.answer(f'Ошибка: {e}')
-    except:
-        await message.answer('Ошибка: неизвестная ошибка')
+    
         
