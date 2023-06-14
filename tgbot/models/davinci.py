@@ -11,7 +11,7 @@ class OpenAIClient:
 
     def generate_text(self, prompt):
         response = openai.Completion.create(
-            engine='davinci',
+            engine='text-davinci-003',
             prompt=prompt,
             max_tokens=1024,
             n=1,
