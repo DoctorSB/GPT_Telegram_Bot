@@ -9,13 +9,13 @@ def completions_with_backoff(**kwargs):
         return openai.Completion.create(**kwargs)
     except Exception as e:
         print(f"Error details: {str(e)}")
-        raise e
+        return None
 
 class GPT:
     def __init__(self) -> None:
         env = Env()
         env.read_env()
-        openai.api_key = env.str('GPT_API_KEY', parse_mode='HTML')
+        openai.api_key = env('GPT_API_KEY')
         self.__message = []
 
     def request(self, task):
@@ -26,9 +26,13 @@ class GPT:
             answer = completions_with_backoff(model="gpt-3.5-turbo", prompt=task)
             end_time = time.time()
             print(f'Request completed in {end_time - start_time} seconds')
-            self.__message.append(
-                {'role': 'assistant', 'content': answer.choices[0].text})
-            return answer.choices[0].text
+            if answer:
+                self.__message.append(
+                    {'role': 'assistant', 'content': answer.choices[0].text})
+                return answer.choices[0].text
+            else:
+                print("No answer received.")
+                return None
         except Exception as e:
             print(f"Error encountered: {str(e)}")
             return None
